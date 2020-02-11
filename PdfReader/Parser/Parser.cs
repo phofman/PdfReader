@@ -226,9 +226,13 @@ namespace PdfReader
             v = Tokenizer.GetToken();
             ThrowOnEmptyOrError(v);
 
-            TokenKeyword keyword = (TokenKeyword)v;
+            TokenKeyword keyword = v as TokenKeyword;
             if (keyword == null)
-                throw new ApplicationException($"Indirect object has missing 'endobj or 'stream'.");
+            {
+                // PH: FIXME:
+                //throw new ApplicationException($"Indirect object has missing 'endobj or 'stream'.");
+                return new ParseIndirectObject(t as TokenInteger, u as TokenInteger, new ParseInteger(0));
+            }
 
             if (keyword.Value == ParseKeyword.EndObj)
                 return new ParseIndirectObject(t as TokenInteger, u as TokenInteger, obj);
@@ -263,7 +267,7 @@ namespace PdfReader
                 v = Tokenizer.GetToken();
                 ThrowOnEmptyOrError(v);
 
-                keyword = (TokenKeyword)v;
+                keyword = v as TokenKeyword;
                 if (keyword == null)
                     throw new ApplicationException($"Stream has missing 'endstream' after content.");
 
@@ -274,7 +278,7 @@ namespace PdfReader
                 v = Tokenizer.GetToken();
                 ThrowOnEmptyOrError(v);
 
-                keyword = (TokenKeyword)v;
+                keyword = v as TokenKeyword;
                 if (keyword == null)
                     throw new ApplicationException($"Indirect object has missing 'endobj'.");
 
