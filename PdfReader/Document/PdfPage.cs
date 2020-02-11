@@ -53,7 +53,7 @@ namespace PdfReader
         public PdfArray B { get => OptionalValue<PdfArray>("B"); }
         public PdfInteger Dur { get => OptionalValue<PdfInteger>("Dur"); }
         public PdfDictionary Trans { get => OptionalValue<PdfDictionary>("Trans"); }
-        public PdfArray Annots { get => OptionalValue<PdfArray>("Annots"); }
+        public PdfObject Annots { get => OptionalValue<PdfObject>("Annots"); }
         public PdfDictionary AA { get => OptionalValue<PdfDictionary>("AA"); }
         public PdfStream Metadata { get => OptionalValue<PdfStream>("Metadata"); }
         public PdfDictionary PieceInfo { get => OptionalValue<PdfDictionary>("PieceInfo"); }
