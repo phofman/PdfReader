@@ -6,14 +6,23 @@ namespace PdfReader
 {
     public class ParseString : ParseObjectBase
     {
-        public ParseString(TokenString token)
+        public ParseString(TokenStringLiteral token)
         {
             Token = token;
+            IsHex = false;
         }
+
+        public ParseString(TokenStringHex token)
+        {
+            Token = token;
+            IsHex = true;
+        }
+
+        public bool IsHex { get; private set; }
 
         public string Value
         {
-            get { return Token.Resolved; }
+            get { return IsHex ? Token.Raw : Token.Resolved; }
         }
 
         public byte[] ValueAsBytes
