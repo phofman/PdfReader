@@ -467,7 +467,7 @@ namespace PdfReader
                 _index++;
 
             string text = Encoding.ASCII.GetString(_line, start, _index - start);
-            if (float.TryParse(text, out float convert))
+            if (float.TryParse(text, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float convert))
                 return new TokenReal(convert);
 
             // String is not a recognized number format
