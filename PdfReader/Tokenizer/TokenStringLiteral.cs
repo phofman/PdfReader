@@ -4,9 +4,15 @@ namespace PdfReader
 {
     public class TokenStringLiteral : TokenString
     {
-        public TokenStringLiteral(string raw)
+        public TokenStringLiteral(string raw, byte[] data)
             : base(raw)
         {
+            RawData = data;
+        }
+
+        public byte[] RawData
+        {
+            get;
         }
 
         public override string Resolved
@@ -16,7 +22,7 @@ namespace PdfReader
 
         public override byte[] ResolvedAsBytes
         {
-            get { return Encoding.ASCII.GetBytes(Raw); }
+            get { return RawData != null ? RawData : Encoding.ASCII.GetBytes(Raw); }
         }
 
         public override string BytesToString(byte[] bytes)

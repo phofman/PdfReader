@@ -640,12 +640,17 @@ namespace PdfReader
                         // If the balancing end marker then we are finished
                         if (nesting == 0)
                         {
-                            sb.Append(Encoding.ASCII.GetString(_line, first, _index - first));
+                            // Get the raw data
+                            var length = _index - first;
+                            var buffer = new byte[length];
+                            Array.Copy(_line, first, buffer, 0, length);
+
+                            sb.Append(Encoding.ASCII.GetString(buffer));
 
                             // Move past the ')' marker
                             _index++;
 
-                            return new TokenStringLiteral(sb.ToString());
+                            return new TokenStringLiteral(sb.ToString(), buffer);
                         }
                         else
                             nesting--;
@@ -714,7 +719,7 @@ namespace PdfReader
                     // Move past the ')' marker
                     _index++;
 
-                    return new TokenStringLiteral(literal);
+                    return new TokenStringLiteral(literal, null);
                 }
 
                 _index += 2;
