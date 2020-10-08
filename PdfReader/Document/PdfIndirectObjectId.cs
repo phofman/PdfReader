@@ -159,7 +159,12 @@ namespace PdfReader
             }
 
             if (_gens.ContainsKey(xref.Gen))
-                throw new ApplicationException($"Indirect object with Id:{xref.Id} Gen:{xref.Gen} already exists.");
+            {
+                // PH: ignore this ref and let the document be still loaded
+                // TODO: should signal any kind of warning to the caller
+                return;
+                //throw new ApplicationException($"Indirect object with Id:{xref.Id} Gen:{xref.Gen} already exists.");
+            }
 
             _gens.Add(indirect.Gen, indirect);
         }
